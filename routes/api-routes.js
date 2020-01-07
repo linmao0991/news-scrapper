@@ -3,7 +3,7 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 var db = require("../models");
 
-mongoose.connect("mongodb://localhost/newsarticlesdb", { useNewUrlParser: true });
+//mongoose.connect("mongodb://localhost/newsarticlesdb", { useNewUrlParser: true });
 
 
 module.exports = function (app) {
