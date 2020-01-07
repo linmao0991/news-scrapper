@@ -1,8 +1,10 @@
 var express = require("express");
 var PORT = 3000;
 var app = express();
+var MONGODB_URI = process.env.MONGOD_URI || "mongodb: //localhost/mongoHeadlines"
 
 // Parse request body as JSON
+mongoose.connect(MONGODB_URI);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Make public a static folder
