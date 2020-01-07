@@ -2,7 +2,7 @@ var express = require("express");
 var PORT = 3000;
 var app = express();
 var mongoose = require("mongoose");
-var MONGODB_URI = process.env.MONGOD_URI || "mongodb://localhost/newsarticlesdb"
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsarticlesdb"
 
 // Parse request body as JSON
 mongoose.connect(MONGODB_URI);
