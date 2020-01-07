@@ -28,7 +28,7 @@ module.exports = function (app) {
                     asyncArticle(response);
                 });
                 break;
-        }
+        }``
     })
 
     //Get all articles from DB
@@ -42,15 +42,13 @@ module.exports = function (app) {
         })
     });
 
-    // Route for grabbing a specific Article by id, populate it with it's note
-    app.get("/articles/:id", function(req, res) {
-        // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-        db.articles.findOne({ _id: req.params.id })
+    // Route for grabbing all comments for specific article
+    app.get("/articles/comments/:id", function(req, res) {
+        db.comments.find({articleId: req.params.id })
         // ..and populate all of the notes associated with it
-        .populate("comments")
-        .then(function(dbArticle) {
+        .then(function(dbComments) {
             // If we were able to successfully find an Article with the given id, send it back to the client
-            res.json(dbArticle);
+            res.json(dbComments);
         })
         .catch(function(err) {
             // If an error occurred, send it to the client
@@ -63,14 +61,7 @@ module.exports = function (app) {
     // Create a new note and pass the req.body to the entry
         db.comments.create(req.body)
         .then(function(dbComment) {
-            // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
-            // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
-            // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-            return db.articles.findOneAndUpdate({ _id: req.params.id }, { note: dbComment._id }, { new: true });
-        })
-        .then(function(dbArticle) {
-            // If we were able to successfully update an Article, send it back to the client
-            res.json(dbArticle);
+            res.json(dbComment);
         })
         .catch(function(err) {
             // If an error occurred, send it to the client
